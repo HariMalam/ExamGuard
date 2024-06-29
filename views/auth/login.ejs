@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/icon/favicon.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="/icon/favicon.ico" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/css/login.css" />
+    <title>ExamGaurd - Login</title>
+  </head>
+  <body>
+    <div class="main">
+      <div class="logo">
+        <img  class="image" src="/icon/logo.png" alt="logo" />
+        <h2>Exam Gaurd</h2>
+      </div>
+
+      <div class="login-container">
+       
+        <% if(invalid) {%>
+        <div style="color: red; padding-bottom: 10px">
+          Invalid Email or Password !!
+        </div>
+        <% } %> <% if(success) {%>
+        <div style="color: green; padding-bottom: 10px">
+          Password Reset Successfully !!!
+        </div>
+        <% } %>
+        <form action="/auth/login" method="post">
+          <h2 class="login"> Login</h2>
+          <input type="text" name="email" placeholder="Email" required />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <input type="submit" value="Login" />
+          <div class="slink">
+            <a class="Create" href="/auth/signup">Get Your Password!</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

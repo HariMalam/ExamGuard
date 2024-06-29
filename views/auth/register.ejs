@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/registar.css" />
+    <title>ExanGaurd - Set Password</title>
+  </head>
+  <body>
+    <div class="main">
+      <div class="registration-form-container">
+        <div class="registration-form-image-container">
+          <img
+            src="/icon/logo.png"
+            alt="logo"
+            srcset=""
+            height="50"
+            width="50"
+          />
+        </div>
+        <h2>Exam Guard</h2>
+      </div>
+      <form id="registration-form">
+        <div>
+          <p class="sign-up-container">Set Password</p>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="Email"
+            required
+          />
+          <span id="email-status" class="status"></span>
+        </div>
+        <div>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Password"
+            required
+          />
+          <input
+            type="password"
+            id="repassword"
+            name="repassword"
+            placeholder="Confirm Password"
+            required
+          />
+          <span id="password-status" class="status"></span>
+        </div>
+        <div>
+          <button type="submit" id="submit-button">Submit</button>
+        </div>
+        <div class="log-in">
+          <a href="/auth/login">Log In?</a>
+        </div>
+      </form>
+      <div id="otp-section" class="otp-section">
+        <h2>Verify OTP</h2>
+        <form id="otp-form">
+          <div>
+            <span id="otp-status" class="status"></span>
+            <label for="otp">OTP (<span id="otpEmail"></span>):</label>
+            <input type="text" id="otp" name="otp" required />
+          </div>
+          <div>
+            <button type="submit" id="verify-otp-button">Verify OTP</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script>
+      const otpSection = document.querySelector("#otp-section");
+      otpSection.style.display = "none";
+
+      const registrationForm = document.querySelector("#registration-form");
+
+      const emailInput = document.querySelector("#email");
+      const passwordInput = document.querySelector("#password");
+      const rePasswrodInput = document.querySelector("#repassword");
+      const otpInput = document.querySelector("#otp");
+
+      const emailStatus = document.getElementById("email-status");
+      const passwordStatus = document.getElementById("password-status");
+      const otpStatus = document.getElementById("otp-status");
+
+      otpStatus.innerText = "";
+
+      const validateEmail = async () => {
+        const email = emailInput.value;
+        if (email) {
+          const response = await fetch(`/auth/check-email?email=${email}`);
+          const data = await response.json();
+          if (!data.exists) {
+            emailStatus.textContent = "Your Email have not Access";
+            return false;
+          }
+        }
+        emailStatus.textContent = "";
+        return true;
+      };
+
+      const validatePassword = async () => {
+        const password = passwordInput.value;
+        const rePassword = rePasswrodInput.value;
+
+        if (password !== rePassword) {
+          passwordStatus.textContent = "Both password should be same";
+          return false;
+        }
+        if (password.length < 6) {
+          passwordStatus.textContent = "password shoud be grether than 6";
+          return false;
+        }
+        passwordStatus.textContent = "";
+        return true;
+      };
+
+      registrationForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const email = validateEmail();
+        const password = validatePassword();
+        let valid = true;
+        await password.then((result) => {
+          if (result === false) {
+            valid = false;
+          }
+        });
+        await email.then((result) => {
+          if (result === false) {
+            valid = false;
+          }
+        });
+
+        if (valid) {
+          submitForm();
+        } else {
+          return;
+        }
+      });
+
+      let formData = {};
+
+      const submitForm = async () => {
+        formData = {
+          email: emailInput.value,
+        };
+        const response = await fetch("/auth/submit-form", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+        const data = await response.json();
+        if (data.success) {
+          otpSection.style.display = "block";
+          registrationForm.style.display = "none";
+          document.getElementById("otpEmail").innerText = formData.email;
+        } else {
+          alert(data.message);
+        }
+      };
+
+      otpSection.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        formData = {
+          email: emailInput.value,
+          password: passwordInput.value,
+          otp: otpInput.value,
+        };
+        const response = await fetch("/auth/verify-otp", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        });
+        const data = await response.json();
+        if (data.success) {
+          otpStatus.innerText = "";
+          window.location.href = data.redirectUrl;
+        } else {
+          otpStatus.innerText = "invalid otp";
+        }
+      });
+    </script>
+  </body>
+</html>
