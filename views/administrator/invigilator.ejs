@@ -1,0 +1,33 @@
+<h1>Invigilators List</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Subject Name</th>
+        <th>Subject Code</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody id="user-table-body">
+      <% invigilators.forEach(user => { %>
+        <tr data-id="<%= user._id %>">
+          <td><%= user.name %></td>
+          <td><%= user.email %></td>
+          <td><%= user.subName %></td>
+          <td><%= user.subCode %></td>
+          <td>
+            <button class="edit-btn">Edit</button>
+            <button class="delete-btn">Delete</button>
+          </td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+
+
+  <h1>Upload Users Excel File</h1>
+  <form action="/administrator/upload-invigilators-excel" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" accept=".xlsx, .xls">
+      <button type="submit">Upload</button>
+  </form>

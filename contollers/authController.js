@@ -121,4 +121,15 @@ const verifyOtp = async (req,res) => {
   }
 }
 
-module.exports = { handleGetLogin, handleGetSignup, handlePostLogin, checkEmail, submitSignupForm, verifyOtp };
+
+const handleLogout = async (req, res) => {
+  req.session.destroy((err) => {
+    if (err) {
+      console.error("Error during logout:", err);
+      return res.status(500).send("Internal Server Error");
+    }
+    res.redirect("/auth/login");
+  });
+};
+
+module.exports = { handleGetLogin, handleGetSignup, handlePostLogin, checkEmail, submitSignupForm, verifyOtp, handleLogout };

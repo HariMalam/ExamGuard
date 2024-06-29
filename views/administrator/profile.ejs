@@ -1,0 +1,25 @@
+<link rel="stylesheet" href="/styles/profile.css" />
+<div class="main">
+  <div class="details" id="details">
+    <div class="head">
+      <h1>Personal Details</h1>
+    </div>
+    <table>
+      <tr>
+        <th>Name</th>
+        <td><div class="name" id="nameDetail"><%= user.name %></div></td>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td><div class="email"><%= user.email %></div></td>
+      </tr>
+      <tr>
+        <th>Mobile</th>
+        <td><div class="mobile" id="mobileDetail"><%= user.phone %></div></td>
+      </tr>
+      <tr>
+        <td><a href="/auth/logout" class="btn btn-danger button">Logout</a></td>
+      </tr>
+    </table>
+  </div>
+</div>

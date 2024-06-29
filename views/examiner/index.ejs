@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/nav.css" />
+    <link rel="stylesheet" href="/css/examiner.css" />
+    <title>ExamGaurd</title>
+  </head>
+  <body>
+    <%- include(`nav`) %>
+    <main>
+      <div class="main_container">
+        <% data.forEach(user => { %>
+
+        <div class="exampaper_container">
+          <div class="exampaper_upper_inner_container">
+            <div class="exampaper_left_inner_container">
+              <p class="organization_name">Gujarat Technological University</p>
+              <p class="subject_name"><%= user.subName %></p>
+              <p class="subject_code"><%= user.subCode %></p>
+            </div>
+            <div class="exampaper_right_inner_container">
+              <div class="upload_paper_container">
+                <form action="/">
+                  
+                </form>
+                <label for="upload">
+                  <input type="file" id="upload" style="display: none" />Upload
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="exampaper_lower_inner_container">
+            <div class="time_line_container"></div>
+          </div>
+        </div>
+        <% }); %>
+      </div>
+    </main>
+  </body>
+</html>

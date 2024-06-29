@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/css/invigilator.css">
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="nav_container">
+                <ul class="ul_container">
+                    <li>Home</li>
+                    <li>Notification</li>
+                    <li>Download History</li>
+                </ul>
+                <ul>
+                    <li class="profile_logo"><img src="/icon/default-user.png" alt="" height="30" width="30"></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <script>
+        // Timer function
+        function startTimer(duration, display) {
+
+        window.onload = function () {
+            const fiveMinutes = 60 * 5,
+                display = document.querySelector('#timer');
+            startTimer(fiveMinutes, display);
+
+            // Dynamic subject list 
+            const subjects = {
+                COA: 'Computer Organization and Architecture',
+                AWP: 'Advanced Web Programming',
+                AI: 'Artificial Intelligence',
+                MAD: 'Mobile Application Development',
+                DS: 'Data Science'
+            };
+
+            const subjectsContainer = document.getElementById('subjectsContainer');
+
+            for (const key in subjects) {
+                if (subjects.hasOwnProperty(key)) {
+                    const subjectCard = document.createElement('div');
+                    subjectCard.classList.add('subjectCard');
+
+                    const divsubject = document.createElement('div');
+                    divsubject.classList.add('divsubject');
+
+                    const subjectName = document.createElement('div');
+                    subjectName.classList.add('subjectName');
+                    subjectName.textContent = key;
+
+                    const downloadButton = document.createElement('button');
+                    downloadButton.textContent = 'Download';
+
+                    divsubject.appendChild(subjectName);
+                    divsubject.appendChild(downloadButton);
+                    subjectCard.appendChild(divsubject);
+
+                    subjectsContainer.appendChild(subjectCard);
+                }
+            }
+        };
+    </script>
+    </main>
+
+</body>
+</html>
