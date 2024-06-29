@@ -4,6 +4,10 @@ const multer = require('multer');
 
 const { handleGetHome, handlePostPdf } = require("../contollers/examinerController");
 
+const {restrictForExaminer} = require("../middleware/roleMiddleware");
+router.use(restrictForExaminer);
+
+
 router.get("/", handleGetHome);
 
 const storage = multer.diskStorage({

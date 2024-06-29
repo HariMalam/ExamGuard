@@ -4,6 +4,9 @@ const multer = require('multer');
 
 const { handleGetHome, handlePostUsersExcel, handlePostExaminersExcel, handlePostInvigilatorExcel} = require("../contollers/adminController");
 
+const {restrictForAdmin} = require("../middleware/roleMiddleware");
+router.use(restrictForAdmin);
+
 router.get("/", handleGetHome);
 
 const upload = multer({ dest: 'uploads/' });

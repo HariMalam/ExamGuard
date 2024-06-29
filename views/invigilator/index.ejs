@@ -23,51 +23,17 @@
         </nav>
     </header>
 
-    <script>
-        // Timer function
-        function startTimer(duration, display) {
-
-        window.onload = function () {
-            const fiveMinutes = 60 * 5,
-                display = document.querySelector('#timer');
-            startTimer(fiveMinutes, display);
-
-            // Dynamic subject list 
-            const subjects = {
-                COA: 'Computer Organization and Architecture',
-                AWP: 'Advanced Web Programming',
-                AI: 'Artificial Intelligence',
-                MAD: 'Mobile Application Development',
-                DS: 'Data Science'
-            };
-
-            const subjectsContainer = document.getElementById('subjectsContainer');
-
-            for (const key in subjects) {
-                if (subjects.hasOwnProperty(key)) {
-                    const subjectCard = document.createElement('div');
-                    subjectCard.classList.add('subjectCard');
-
-                    const divsubject = document.createElement('div');
-                    divsubject.classList.add('divsubject');
-
-                    const subjectName = document.createElement('div');
-                    subjectName.classList.add('subjectName');
-                    subjectName.textContent = key;
-
-                    const downloadButton = document.createElement('button');
-                    downloadButton.textContent = 'Download';
-
-                    divsubject.appendChild(subjectName);
-                    divsubject.appendChild(downloadButton);
-                    subjectCard.appendChild(divsubject);
-
-                    subjectsContainer.appendChild(subjectCard);
-                }
-            }
-        };
-    </script>
-    </main>
-
+    <div class="subjectsContainer">
+      <% data.forEach(user => { %>
+      <div class="subjectCard">
+        <div class="divsubject">
+          <div class="subjectName">
+            <%= user.subName %> - <%= user.subCode %>
+          </div>
+          <button>Download</button>
+        </div>
+      </div>
+      <% }); %>
+    </div>
 </body>
 </html>
